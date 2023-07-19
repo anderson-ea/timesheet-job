@@ -1,6 +1,5 @@
 import React from "react";
-import './Login.css';
-import '../../App.css';
+import '../../App.scss';
 import { Link, NavLink } from "react-router-dom"
 
 import logo from "./Assets/REDI-FINAL-Light-03.svg"
