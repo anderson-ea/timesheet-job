@@ -16,7 +16,7 @@
   --paleGreen: rgb(90,98,28);
   --whiteColor: hsl(0, 0%, 100%);
   --blackColor: hsl(0, 0%, 18%);
-  --greyText: hsl(0, 0%, 75%);
+  --greyText: hsl(0, 0%, 85%);
   --bgColor: hsl(0, 11%, 85%);
   --inputColor: hsl(154, 14%, 90%);
 
@@ -58,13 +58,25 @@ li {
   list-style: none;
 }
 
+.message {
+  display: none;
+}
+
+.showMessage {
+  display: block;
+  color: var(--whiteColor);
+  background-color: var(--hoverColor);
+  border-radius: 3px;
+  text-align: center;
+}
+
 .btn {
   border: none;
   outline: none;
   cursor: pointer;
   border-radius: 8px;
   padding: .8rem 1rem;
-  color: var(--paleGreen);
+  color: var(--hoverColor);
 }
 
 .btn .icon {
@@ -82,8 +94,8 @@ li {
   justify-content: center;
   
   .container {
-    height: 90vh;
-    background-color: var(--bgColor);
+    height: 50vh;
+    background-color: var(--greyText);
     border-radius: 10px;
     max-width: 768px;
     width: 100vw;
@@ -103,10 +115,6 @@ li {
       margin: auto;
       border-radius: 10px;
       overflow: hidden;
-
-      img {
-        max-height: 290px;
-      }
 
       .title {
         color: var(--hoverColor);
@@ -160,7 +168,6 @@ li {
             color: var(--blackColor);
             font-weight: 400;
             font-size: 14px;
-            padding: .5rem 0 0 0;
             display: block;
           }
 
@@ -183,7 +190,10 @@ li {
 }
 
 @media (max-width: 900px) {
-  .loginPage > .container {
-    flex-direction: column;
+  .loginPage {
+    .container {
+     flex-direction: column;
+     height: 90vh;
+   }
   }
 }
