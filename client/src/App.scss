@@ -85,11 +85,10 @@ li {
     height: 90vh;
     background-color: var(--bgColor);
     border-radius: 10px;
-    max-width: 1000px;
+    max-width: 768px;
     width: 100vw;
-    overflow: hidden;
-    justify-content: space-around;
-    padding: 20px;
+    justify-content: center;
+    padding: 20px 30px;
     margin: 20px;
 
     .imgDiv {
@@ -97,7 +96,8 @@ li {
       height: 100%;
       width: 100%;
       min-height: 250px;
-      min-width: 200px;
+      min-width: 240px;
+      max-width: 350px;
       text-align: center;
       justify-content: center;
       margin: auto;
