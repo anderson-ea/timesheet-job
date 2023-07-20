@@ -1,8 +1,8 @@
 import React from "react";
-import '../../App.scss';
+import '../../App.css';
 import { Link, NavLink } from "react-router-dom"
 
-import logo from "./Assets/REDI-FINAL-Light-03.svg"
+import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
 //import icons
 import {FaUserShield} from "react-icons/fa"
