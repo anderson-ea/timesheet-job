@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../App.css';
 import { Link, NavLink } from "react-router-dom"
 
@@ -11,6 +11,14 @@ import {AiOutlineSwapRight} from "react-icons/ai"
 import {MdMarkEmailRead} from "react-icons/md"
 
 const Register = () => {
+  
+  //useStates for input values
+  const [email, setEmail] = useState('')
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+
+  //onclick 
+
   return (
     <div className="loginPage flex">
       <div className="container flex">
@@ -34,21 +42,27 @@ const Register = () => {
               <label htmlFor="email">Email</label>
               <div className="input flex">
                 <MdMarkEmailRead className="icon"/>
-                <input type="text" id="email" placeholder="Enter Email"/>
+                <input autoComplete="on" type="text" id="email" placeholder="Enter Email"
+                  onChange={(event) => {setEmail(event.target.value)}}
+                />
               </div>
             </div>
             <div className="inputDiv">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Full Name</label>
               <div className="input flex">
                 <FaUserShield className="icon"/>
-                <input type="text" id="username" placeholder="Enter Username"/>
+                <input type="text" id="username" placeholder="Enter First and Last Name"
+                  onChange={(event) => {setUserName(event.target.value)}}
+                />
               </div>
             </div>
             <div className="inputDiv">
               <label htmlFor="password">Password</label>
               <div className="input flex">
                 <BsFillShieldLockFill className="icon"/>
-                <input autoComplete="on" type="password" id="password" placeholder="Enter Password"/>
+                <input autoComplete="on" type="password" id="password" placeholder="Enter Password"
+                  onChange={(event) => {setPassword(event.target.value)}}
+                />
               </div>
             </div>
             <button type="submit" className="btn flex">
