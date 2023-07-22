@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import '../../App.css';
+import React, { useState } from "react"
+import '../../App.css'
 import { Link, NavLink } from "react-router-dom"
+import Axios from 'axios'
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -17,7 +18,17 @@ const Register = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
-  //onclick 
+  //function to send what registration info the user has submitted
+  const createUser = () => {
+    Axios.post('http://localhost:8800/register', {
+      // create variable to send to server
+      Email: email,
+      UserName: userName,
+      Password: password
+    }).then(() => {
+      console.log('test')
+    })
+  }
 
   return (
     <div className="loginPage flex">
