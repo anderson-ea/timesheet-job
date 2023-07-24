@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import '../../App.css'
-import { Link, NavLink } from "react-router-dom"
-import Axios from 'axios'
+import { Link } from "react-router-dom"
+import axios from 'axios'
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -20,13 +20,13 @@ const Register = () => {
 
   //function to send what registration info the user has submitted
   const createUser = () => {
-    Axios.post('http://localhost:8800/register', {
+    axios.post('http://localhost:3002/register', {
       // create variable to send to server
       Email: email,
       UserName: userName,
       Password: password
     }).then(() => {
-      console.log('test')
+      console.log('user added')
     })
   }
 
@@ -76,7 +76,9 @@ const Register = () => {
                 />
               </div>
             </div>
-            <button type="submit" className="btn flex">
+            <button type="submit" className="btn flex" 
+              onClick={createUser()}
+            >
               <span>Register</span>
               <AiOutlineSwapRight className="icon"/>
             </button>
