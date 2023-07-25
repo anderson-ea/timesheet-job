@@ -77,7 +77,7 @@ const Register = () => {
               </div>
             </div>
             <button type="submit" className="btn flex" 
-              onClick={createUser()}
+              onClick={createUser}
             >
               <span>Register</span>
               <AiOutlineSwapRight className="icon"/>

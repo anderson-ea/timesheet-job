@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../App.css';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Axios from "axios";
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -10,6 +11,30 @@ import {BsFillShieldLockFill} from "react-icons/bs"
 import {AiOutlineSwapRight} from "react-icons/ai"
 
 const Login = () => {
+  //use states to hold user inputs for login
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+  const navigateTo = useNavigate()
+
+  //function to send what registration info the user has submitted
+  const loginUser = (e) => {
+    //prevent submitting
+    e.preventDefault()
+    
+    Axios.post('http://localhost:3002/login', {
+      //create variable to send to server
+      LoginEmail: loginEmail,
+      LoginPassword: loginPassword
+    }).then((response) => {
+      //if credentials don't match
+      if (response.data.message) {
+        navigateTo('/') //navigate back to same login page
+      } else {
+        navigateTo('/dashboard') //navigate to dashboard
+      }
+    })
+  }
+
   return (
     <div className="loginPage flex">
       <div className="container flex">
@@ -30,20 +55,26 @@ const Login = () => {
           <form action="" className="form grid">
             <span className="showMessage">Login Status will go here</span>
             <div className="inputDiv">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="email">Email</label>
               <div className="input flex">
                 <FaUserShield className="icon"/>
-                <input type="text" id="username" placeholder="Enter Username"/>
+                <input type="text" id="email" 
+                  placeholder="Enter Email" onChange={event => 
+                    setLoginEmail(event.target.value)}
+                />
               </div>
             </div>
             <div className="inputDiv">
               <label htmlFor="password">Password</label>
               <div className="input flex">
                 <BsFillShieldLockFill className="icon"/>
-                <input autoComplete="on" type="password" id="password" placeholder="Enter Password"/>
+                <input autoComplete="on" type="password" id="password"
+                  placeholder="Enter Password" onChange={event => 
+                    setLoginPassword(event.target.value)}
+                />
               </div>
             </div>
-            <button type="submit" className="btn flex">
+            <button type="submit" className="btn flex" onClick={loginUser}>
               <span>Login</span>
               <AiOutlineSwapRight className="icon"/>
             </button>
