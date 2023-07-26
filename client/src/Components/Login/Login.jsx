@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import '../../App.css';
+import React, { useEffect, useState } from "react"
+import '../../App.css'
 import { Link, useNavigate } from "react-router-dom"
-import Axios from "axios";
+import Axios from "axios"
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -16,6 +16,9 @@ const Login = () => {
   const [loginPassword, setLoginPassword] = useState('')
   const navigateTo = useNavigate()
 
+  const [loginStatus, setLoginStatus] = useState('')
+  const [statusHolder, setStatusHolder] = useState('message')
+
   //function to send what registration info the user has submitted
   const loginUser = (e) => {
     //prevent submitting
@@ -29,11 +32,21 @@ const Login = () => {
       //if credentials don't match
       if (response.data.message) {
         navigateTo('/') //navigate back to same login page
+        setLoginStatus(`Incorrect email or password`)
       } else {
         navigateTo('/dashboard') //navigate to dashboard
       }
     })
   }
+
+  useEffect(() => {
+    if (loginStatus !== '') {
+      setStatusHolder('showMessage') //show login message
+      setTimeout(() => {
+        setStatusHolder('message') //hide it after 4s
+      }, 4000)
+    }
+  }, [loginStatus])
 
   return (
     <div className="loginPage flex">
@@ -53,7 +66,7 @@ const Login = () => {
 
         <div className="formDiv flex">
           <form action="" className="form grid">
-            <span className="showMessage">Login Status will go here</span>
+            <span className={statusHolder}>{loginStatus}</span>
             <div className="inputDiv">
               <label htmlFor="email">Email</label>
               <div className="input flex">
@@ -78,7 +91,6 @@ const Login = () => {
               <span>Login</span>
               <AiOutlineSwapRight className="icon"/>
             </button>
-            <a href="/dashboard">dash</a>
             <span className="forgotPassword">
               Forgot your password? <a href="">Click Here</a>
             </span>

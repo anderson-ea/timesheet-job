@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import '../../App.css'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
@@ -17,18 +17,37 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
+  const [regStatusHolder, setRegStatusHolder] = useState('message')
+  const [registerStatus, setRegisterStatus] = useState('')
+  const navigateTo = useNavigate()
 
   //function to send what registration info the user has submitted
-  const createUser = () => {
+  const createUser = (e) => {
+    e.preventDefault()
+
     axios.post('http://localhost:3002/register', {
       // create variable to send to server
       Email: email,
       UserName: userName,
       Password: password
-    }).then(() => {
-      console.log('user added')
+    }).then((response) => {
+      //if user already exists
+      if (response.data.message == 'Email already exists') {
+        setRegisterStatus('Email already exists')
+      } else {
+        navigateTo('/')
+      }
     })
   }
+
+  useEffect(() => {
+    if (registerStatus !== '') {
+      setRegStatusHolder('showMessage') //show login message
+      setTimeout(() => {
+        setRegStatusHolder('message') //hide it after 4s
+      }, 4000)
+    }
+  }, [registerStatus])
 
   return (
     <div className="loginPage flex">
@@ -48,7 +67,7 @@ const Register = () => {
 
         <div className="formDiv flex">
           <form action="" className="form grid">
-
+            <span className={regStatusHolder}>{registerStatus}</span>
             <div className="inputDiv">
               <label htmlFor="email">Email</label>
               <div className="input flex">

@@ -22,7 +22,9 @@ const db = mysql.createConnection({
   host: "localhost",
   password: "LoLmachines1!",
   database: "timesheetdb",
+  multipleStatements: true
 })
+
 
 app.post('/register', (req, res) => {
   //get values from register page
@@ -33,16 +35,24 @@ app.post('/register', (req, res) => {
   //create SQL statement to insert user to db table Users
   const SQL = 'INSERT INTO users (email, username, password) VALUES (?,?,?)'
   const Values = [sentEmail, sentUserName, sentPassword]
-
-  //query to execute sql statement
-  db.query(SQL, Values, (err, result) => {
-    if (err) {
-      res.send(err)
+  //SQL statement to check if user already exists
+  const sqlGet = `SELECT * FROM users WHERE email = ?`;
+  db.query(sqlGet, sentEmail, (error, results) => {
+    if (results) {
+      // Show the error the Firstname already exist
+      res.send({message: 'Email already exists'})
     } else {
-      console.log('User inserted successfully')
-      res.send({message: 'User added!!!'})
-    }
-  })
+      //query to execute sql statement
+      db.query(SQL, Values, (err, result) => {
+        if (err) {
+          res.send(err)
+        } else {
+          console.log('User inserted successfully')
+          res.send({message: 'User added!!!'})
+        }
+      })
+    }  
+  });
 })
 
 app.post('/login', (req, res) => {
