@@ -19,6 +19,7 @@ const SubmitHours = () => {
         Description:
         <br />Write notes here input
       </div>
+      <button className="btn" type='submit'>Submit</button>
     </div>
   )
 }

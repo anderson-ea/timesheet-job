@@ -217,6 +217,14 @@ li {
   box-shadow: 0px 5px 0px -2px var(--hoverColor);
 }
 
+.submitContainer > div, .viewContainer > div {
+  padding: 8px;
+}
+
+.fromToContainer {
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 900px) {
   .loginPage .container {
     flex-direction: column;
