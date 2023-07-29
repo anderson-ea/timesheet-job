@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import '../../App.css'
 import { Link, useNavigate } from "react-router-dom"
 import axios from 'axios'
-
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
 //import icons
@@ -25,27 +24,32 @@ const Register = () => {
   const createUser = (e) => {
     e.preventDefault()
 
-    axios.post('http://localhost:3002/register', {
-      // create variable to send to server
-      Email: email,
-      UserName: userName,
-      Password: password
-    }).then((response) => {
-      //if user already exists
-      if (response.data.message == 'Email already exists') {
-        setRegisterStatus('Email already exists')
-      } else {
-        navigateTo('/')
-      }
-    })
+    if (password.length < 6) {
+      setRegisterStatus('Password must be greater than 5 characters')
+      
+    } else if (email.includes('@') == false) {
+      setRegisterStatus('Must register a valid email')
+    } else {
+      axios.post('http://localhost:3002/register', {
+        // create variable to send to server
+        Email: email,
+        UserName: userName,
+        Password: password
+      }).then((response) => {
+        //if user already exists
+        if (response.data.message == 'Email already exists') {
+          setRegisterStatus('Email already exists')
+        } else {
+          navigateTo('/')
+        }
+      })
+    }
+
   }
 
   useEffect(() => {
     if (registerStatus !== '') {
-      setRegStatusHolder('showMessage') //show login message
-      setTimeout(() => {
-        setRegStatusHolder('message') //hide it after 4s
-      }, 4000)
+      setRegStatusHolder('showMessage') //show register denied message
     }
   }, [registerStatus])
 
