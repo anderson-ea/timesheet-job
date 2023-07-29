@@ -194,6 +194,10 @@ li {
   box-shadow: 0 5px 10px rgb(194, 194, 194);
 }
 
+.selectedContainer {
+  margin-bottom: 15px;
+}
+
 .selectedContainer > h2 {
   padding: 0px 6px;
   justify-self: start;
