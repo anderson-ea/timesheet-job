@@ -217,12 +217,26 @@ li {
   box-shadow: 0px 5px 0px -2px var(--hoverColor);
 }
 
+.submitContainer {
+  width: 95%;
+}
+
+.submitContainer > .btn {
+  margin-left: 8px;
+}
+
 .submitContainer > div, .viewContainer > div {
   padding: 8px;
 }
 
 .fromToContainer {
   justify-content: space-between;
+}
+
+.descriptionText {
+  width: 100%;
+  height: 8rem;
+  resize: none;
 }
 
 @media screen and (max-width: 900px) {
