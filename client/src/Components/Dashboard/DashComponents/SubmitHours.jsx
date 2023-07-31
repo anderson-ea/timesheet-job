@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
 
 const SubmitHours = () => {
   const [startDate, setStartDate] = useState(new Date())
@@ -10,17 +8,27 @@ const SubmitHours = () => {
   }
 
   return (
-    <div className='submitContainer'>
+    <div className='flex column submitContainer'>
       <div className="dateContainer">
-        Date: 
-        <br /><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+        <label>Date:</label> 
+        <input type="datetime-local" id="meeting-time"
+          name="meeting-time" value="2018-06-12T19:30"
+          onChange={(date) => setStartDate(date)}
+        />
       </div>
       <div className="timeContainer">
-        Time:
-        <br />time plugin maybe
+        <label>Hours Worked</label>
+        <div className="flex fromToContainer">
+          <label>from:</label>
+          <input type="time" id="appt" name="appt"
+          min="09:00" max="18:00" required></input>
+          <label>to:</label>
+          <input type="time" id="appt" name="appt"
+          min="06:00" max="20:00" required></input>
+        </div>
       </div>
       <div className="locationContainer">
-        Location:
+        <label>Location:</label>
         <br />
         <select name="locations" id="locations">
           <option value="Elk Park Rd">Elk Park Rd</option>
@@ -31,7 +39,7 @@ const SubmitHours = () => {
         </select>
       </div>
       <div className="descriptionContainer">
-        Description:
+        <label>Description:</label>
         <br /><textarea className="descriptionText" type="text"></textarea>
       </div>
       <button className="btn" type='submit' onClick={submitHours}>Submit</button>

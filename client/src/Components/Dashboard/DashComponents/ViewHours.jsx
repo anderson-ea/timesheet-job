@@ -4,10 +4,10 @@ const ViewHours = () => {
   return (
     <div className='viewContainer'>
       <div className="dateContainer">
-        Select Dates:
+        <label>Select Dates:</label>
         <div className="flex fromToContainer">
-          <div className="fromDate">from:</div>
-          <div className="toDate">to: empty input div here with stuff</div>
+          <label>from:</label>
+          <label>to:</label>
         </div>
         <button className="btn" type='submit'>View Hours</button> 
       </div>

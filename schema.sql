@@ -7,3 +7,10 @@ CREATE TABLE users (
   userName VARCHAR(60) NOT NULL,
   password VARCHAR(155) NOT NULL
 );
+
+CREATE TABLE timesheet (
+  id integer PRIMARY KEY AUTO_INCREMENT,
+  project VARCHAR(50) NOT NULL,
+  userID integer FOREIGN KEY,
+
+)

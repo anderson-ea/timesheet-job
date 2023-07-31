@@ -184,8 +184,6 @@ li {
 }
 
 .dashboardContainer {
-  justify-content: flex-start;
-  align-items: center;
   padding: 20px;
   height: 95vh;
   width: 95%;
@@ -196,11 +194,11 @@ li {
 
 .selectedContainer {
   margin-bottom: 15px;
+  margin-left: 7px;
 }
 
 .selectedContainer > h2 {
   padding: 0px 6px;
-  justify-self: start;
 }
 
 .notSelected:hover, .selectedDash:hover {
@@ -218,25 +216,40 @@ li {
 }
 
 .submitContainer {
-  width: 95%;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.submitContainer label, .viewContainer label {
+  font-weight: bold;
 }
 
 .submitContainer > .btn {
   margin-left: 8px;
 }
 
-.submitContainer > div, .viewContainer > div {
+.submitContainer > div, .viewContainer label {
   padding: 8px;
+}
+
+.timeContainer {
+  width: 178px;
 }
 
 .fromToContainer {
   justify-content: space-between;
+  max-width: 300px;
 }
 
 .descriptionText {
   width: 100%;
+  min-width: 178px;
   height: 8rem;
   resize: none;
+}
+
+#locations {
+  width: 178px;
 }
 
 @media screen and (max-width: 900px) {
