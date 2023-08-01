@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import '../../App.css'
 import { Link, useNavigate } from "react-router-dom"
-import Axios from "axios"
+import axios from "axios"
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -24,7 +24,7 @@ const Login = () => {
     //prevent submitting
     e.preventDefault()
     
-    Axios.post('http://localhost:3002/login', {
+    axios.post('http://localhost:3002/login', {
       //create variable to send to server
       LoginEmail: loginEmail,
       LoginPassword: loginPassword

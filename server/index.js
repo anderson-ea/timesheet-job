@@ -74,3 +74,10 @@ app.post('/login', (req, res) => {
     }
   })
 }) 
+
+app.post('/dashboard', (req, res) => {
+  const sentDate = req.body.Date
+  const sentHours = req.body.Hours
+  const sentJobLocation = req.body.JobLocation
+  const sentDescription = req.body.Description
+})
