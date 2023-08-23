@@ -1,39 +1,42 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
+import AuthContext from '../../../context/AuthProvider'
 
 const SubmitHours = () => {
   const [date, setDate] = useState('')
   const [hours, setHours] = useState(0)
   const [jobLocation, setJobLocation] = useState('Arrowhead')
   const [description, setDescription] = useState('')
-  const [hoursStatusHolder, setHoursStatusHolder] = useState('message')
-  const [hoursStatus, setHoursStatus] = useState('test')
+  const [formStatusHolder, setFormStatusHolder] = useState('message')
+  const [formStatus, setFormStatus] = useState('')
+
+  const { auth } = useContext(AuthContext)
 
   const submitHours = () => {
-    console.log(date)
+    axios.post('http://localhost:3002/dashboard', {
+      //create variable to send to server
+      UserID: auth.id,
+      Date: date,
+      Hours: hours,
+      JobLocation: jobLocation,
+      Description: description,
+      // ****need to have userID sent here with a userRef
+    }).then((response) => {
+      //if credentials don't match
+      if (response.data.message == 'Hours for this date already exist.') {
+        setFormStatus('Hours for this date already exist.')
+      } else {
+        navigateTo('/dashboard') //navigate to dashboard
+      }
+    })
   }
 
-  axios.post('http://localhost:3002/dashboard', {
-    //create variable to send to server
-    Date: date,
-    Hours: hours,
-    JobLocation: jobLocation,
-    Description: description
-  }).then((response) => {
-    //if credentials don't match
-    if (response.data.message) {
-      navigateTo('/dashboard') //navigate back to same dashboard
-      setLoginStatus(`Incorrect email or password`)
-    } else {
-      navigateTo('/dashboard') //navigate to dashboard
-    }
-  })
 
   useEffect (() => {
-    if (hoursStatus !== '') {
-      setHoursStatusHolder('showMessage') //show submission denied message
+    if (formStatus !== '') {
+      setFormStatusHolder('showMessage') //show submission denied message
     }
-  }, [hoursStatus])
+  }, [formStatus])
 
   return (
     <div className='flex column submitContainer'>
@@ -77,7 +80,7 @@ const SubmitHours = () => {
         </textarea>
       </div>
       <button className="btn" type='submit' onClick={submitHours}>Submit Hours</button>
-      <span className={hoursStatusHolder}>{hoursStatus}</span>
+      <span className={formStatusHolder}>{formStatus}</span>
     </div>
   )
 }

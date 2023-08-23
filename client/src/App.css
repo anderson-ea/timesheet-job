@@ -273,13 +273,17 @@ li {
 @media screen and (max-width: 900px) {
   .loginPage .container {
     flex-direction: column;
-    height: 90vh;
+    height: 98vh;
   }
 }
 
 @media screen and (max-width: 320px) {
   .descriptionText, #locations, #hoursWorked {
     width: 210px;
+  }
+  .inputDiv > label, .inputDiv{
+    width: 90vw;
+    margin-left: 20px;
   }
   #date {
     width: 167px;

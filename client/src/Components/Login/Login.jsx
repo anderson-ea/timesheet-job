@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import '../../App.css'
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import AuthContext from "../../context/AuthProvider" // setAuth when login babyyyy
 
 import logo from "../../Assets/REDI-FINAL-Light-03.svg"
 
@@ -11,6 +12,9 @@ import {BsFillShieldLockFill} from "react-icons/bs"
 import {AiOutlineSwapRight} from "react-icons/ai"
 
 const Login = () => {
+  //hold user context
+  const { setAuth } = useContext(AuthContext)
+
   //use states to hold user inputs for login
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
@@ -34,6 +38,7 @@ const Login = () => {
         navigateTo('/') //navigate back to same login page
         setLoginStatus(`Incorrect email or password`)
       } else {
+        setAuth(response.data[0])
         navigateTo('/dashboard') //navigate to dashboard
       }
     })
