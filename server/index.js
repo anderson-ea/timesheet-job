@@ -83,14 +83,20 @@ app.post('/dashboard', (req, res) => {
   const sentUserID = req.body.UserID
 
   const SQL = 'INSERT INTO workSegment (jobLocation, hoursWorked, dateWorked, descriptionNotes, employeeId) VALUES (?,?,?,?,?)'
-  const Values = [sentJobLocation, sentHours, sentDate, sentDescription, sentEmployeeId]
-
+  const Values = [sentJobLocation, sentHours, sentDate, sentDescription, sentUserID]
+  const sqlCheckDate = `SELECT * FROM workSegment WHERE userID = ? && dateWorked = ?`;
+  const DateValues = [sentUserID, sentDate]
+  db.query(sqlCheckDate, DateValues, (error, results) => {
+    if (results) {
+      res.send({message: `Hours for this date already exist.`})
+    }
+  })
   db.query(SQL, Values, (err, results) => {
     if (err) {
       res.send({error: err})
     } if (results.length > 0) {
       res.send(results)
-    } else {
+    } if () {
       res.send({message: `Segment already placed`}) //make sure to check logic for only one entry later
     }
   })
