@@ -185,8 +185,8 @@ li {
 
 .dashboardContainer {
   padding: 20px;
-  height: 95vh;
-  width: 95%;
+  height: 500px;
+  width: 311px;
   border-radius: 10px;
   overflow: hidden;
   background-color: var(--greyText);

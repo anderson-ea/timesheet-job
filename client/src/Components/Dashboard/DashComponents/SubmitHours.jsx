@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import AuthContext from '../../../context/AuthProvider'
 
-const SubmitHours = () => {
+export const SubmitHours = () => {
   const [date, setDate] = useState('')
   const [hours, setHours] = useState(0)
   const [jobLocation, setJobLocation] = useState('Arrowhead')
@@ -26,7 +26,7 @@ const SubmitHours = () => {
       if (response.data.message == 'Hours for this date already exist.') {
         setFormStatus('Hours for this date already exist.')
       } else {
-        navigateTo('/dashboard') //navigate to dashboard
+        window.location.reload(false) //reload page
       }
     })
   }
@@ -73,8 +73,8 @@ const SubmitHours = () => {
       <div className="descriptionContainer">
         <label>Description:</label>
         <br />
-        <textarea className="descriptionText" 
-          placeholder="Description of work done" type="text"
+        <textarea className="descriptionText" maxLength={300}
+          placeholder="Description of work done. 300 max." type="text"
           onChange={(event) => {setDescription(event.target.value)}}
         >
         </textarea>
