@@ -3,6 +3,7 @@ const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
 
+const bcrypt = require('bcrypt')
 // require('dotenv').config()
 // const USER = process.env.USER
 // const HOST = process.env.HOST
@@ -31,28 +32,33 @@ app.post('/register', (req, res) => {
   const sentEmail = req.body.Email
   const sentUserName = req.body.UserName
   const sentPassword = req.body.Password
-
+  
   //create SQL statement to insert user to db table Users
   const SQL = 'INSERT INTO users (email, username, password) VALUES (?,?,?)'
-  const Values = [sentEmail, sentUserName, sentPassword]
+  
   //SQL statement to check if user already exists
   const sqlGet = `SELECT * FROM users WHERE email = ?`;
-  db.query(sqlGet, sentEmail, (error, results) => {
-    if (results) {
-      // Show the error the Firstname already exist
-      res.send({message: 'Email already exists'})
-    } else {
-      //query to execute sql statement
-      db.query(SQL, Values, (err, result) => {
-        if (err) {
-          res.send(err)
-        } else {
-          console.log('User inserted successfully')
-          res.send({message: 'User added!!!'})
-        }
-      })
-    }  
-  });
+  bcrypt.hash(sentPassword, 10, (err, hash) => {
+    if (err) {
+      console.log(err)
+    }
+    const Values = [sentEmail, sentUserName, hash]
+    db.query(sqlGet, sentEmail, (error, results) => {
+      if (results.length > 0) {
+        // Show the error the Firstname already exist
+        res.send({message: 'Email already exists'})
+      } else {
+        //query to execute sql statement
+        db.query(SQL, Values, (err, result) => {
+          if (err) {
+            res.send(err)
+          } else {
+            res.send({message: 'User added'})
+          }
+        })
+      }  
+    });
+  })
 })
 
 app.post('/login', (req, res) => {

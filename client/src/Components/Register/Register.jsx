@@ -39,7 +39,7 @@ const Register = () => {
         //if user already exists
         if (response.data.message == 'Email already exists') {
           setRegisterStatus('Email already exists')
-        } else {
+        } else if (response.data.message == 'User added') {
           navigateTo('/')
         }
       })

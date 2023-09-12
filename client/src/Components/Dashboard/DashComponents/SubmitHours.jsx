@@ -74,7 +74,7 @@ export const SubmitHours = () => {
         <label>Description:</label>
         <br />
         <textarea className="descriptionText" maxLength={300}
-          placeholder="Description of work done. 300 max." type="text"
+          placeholder="Describe work done. 300 max characters" type="text"
           onChange={(event) => {setDescription(event.target.value)}}
         >
         </textarea>
