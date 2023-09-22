@@ -67,14 +67,18 @@ app.post('/login', (req, res) => {
   const sentLoginPassword = req.body.LoginPassword
 
   //create SQL statement to insert user to db table Users
-  const SQL = 'SELECT * FROM users WHERE email = ? && password = ?'
-  const Values = [sentLoginEmail, sentLoginPassword]
-
-  db.query(SQL, Values, (err, results) => {
+  const SQL = 'SELECT * FROM users WHERE email = ?'
+  db.query(SQL, sentLoginEmail, (err, results) => {
     if (err) {
       res.send({error: err})
     } if (results.length > 0) {
-      res.send(results)
+      bcrypt.compare(sentLoginPassword, results[0].password, (err, response) => {
+        if (response) {
+          res.send(results)
+        } else {
+          res.send({message: `Credentials don't match`})
+        }
+      })
     } else {
       res.send({message: `Credentials don't match`})
     }
