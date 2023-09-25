@@ -4,13 +4,16 @@ import AuthContext from '../../../context/AuthProvider'
 
 export const SubmitHours = () => {
   const [date, setDate] = useState('')
-  const [hours, setHours] = useState(0)
+  const [hours, setHours] = useState(null)
   const [jobLocation, setJobLocation] = useState('Arrowhead')
   const [description, setDescription] = useState('')
   const [formStatusHolder, setFormStatusHolder] = useState('message')
   const [formStatus, setFormStatus] = useState('')
+  const [formFull, setFormFull] = useState()
 
   const { auth } = useContext(AuthContext)
+
+  const incompleteForm = !date || !hours || !description || !jobLocation
 
   const submitHours = () => {
     axios.post('http://localhost:3002/dashboard', {
@@ -26,7 +29,8 @@ export const SubmitHours = () => {
       if (response.data.message == 'Hours for this date already exist.') {
         setFormStatus('Hours for this date already exist.')
       } else {
-        window.location.reload(false) //reload page
+        setDate('')
+        setHours(0)
       }
     })
   }
@@ -79,7 +83,15 @@ export const SubmitHours = () => {
         >
         </textarea>
       </div>
-      <button className="btn" type='submit' onClick={submitHours}>Submit Hours</button>
+      <button 
+        type='submit' 
+        onClick={submitHours}
+        disabled={incompleteForm}
+        className={!incompleteForm ? 'btn' : 'btnIncomplete'} 
+      >
+        Submit Hours
+      </button>
+      {incompleteForm && <div><i>all fields required</i></div>}
       <span className={formStatusHolder}>{formStatus}</span>
     </div>
   )

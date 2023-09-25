@@ -270,6 +270,14 @@ li {
   margin-left: 5px;
 }
 
+.btnIncomplete {
+  margin-left: 8px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
 @media screen and (max-width: 900px) {
   .loginPage .container {
     flex-direction: column;
