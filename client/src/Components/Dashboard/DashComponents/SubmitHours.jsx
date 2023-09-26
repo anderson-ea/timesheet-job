@@ -14,7 +14,7 @@ export const SubmitHours = () => {
 
   const incompleteForm = !date || !hours || !description || !jobLocation
 
-  const submitHours = () => {
+  const submitHours = (e) => {
     axios.post('http://localhost:3002/dashboard', {
       //create variable to send to server
       UserID: auth.id,
@@ -22,14 +22,13 @@ export const SubmitHours = () => {
       Hours: hours,
       JobLocation: jobLocation,
       Description: description,
-      // ****need to have userID sent here with a userRef
+      // ****userID is not sending when page is refreshed
     }).then((response) => {
       //if credentials don't match
       if (response.data.message == 'Hours for this date already exist.') {
         setFormStatus('Hours for this date already exist.')
       } else {
-        setDate('')
-        setHours(0)
+        e.target.reset();
       }
     })
   }
@@ -42,7 +41,7 @@ export const SubmitHours = () => {
   }, [formStatus])
 
   return (
-    <div className='flex column submitContainer'>
+    <form className='flex column submitContainer' onSubmit={submitHours}>
       <div className="dateContainer">
         <label>Date:</label> 
         <input type="date" id="date"
@@ -83,16 +82,14 @@ export const SubmitHours = () => {
         </textarea>
       </div>
       <button 
-        type='submit' 
-        onClick={submitHours}
+        type='submit'
         disabled={incompleteForm}
         className={!incompleteForm ? 'btn' : 'btnIncomplete'} 
-      >
-        Submit Hours
+      >Submit Hours
       </button>
       {incompleteForm && <div><i>all fields required</i></div>}
       <span className={formStatusHolder}>{formStatus}</span>
-    </div>
+    </form>
   )
 }
 
