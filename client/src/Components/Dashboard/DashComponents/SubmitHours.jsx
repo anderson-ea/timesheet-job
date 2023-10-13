@@ -9,6 +9,7 @@ export const SubmitHours = () => {
   const [description, setDescription] = useState('')
   const [formStatusHolder, setFormStatusHolder] = useState('message')
   const [formStatus, setFormStatus] = useState('')
+  const [formFull, setFormFull] = useState()
 
   const { auth } = useContext(AuthContext)
 
