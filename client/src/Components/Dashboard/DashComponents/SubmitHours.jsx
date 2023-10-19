@@ -9,30 +9,10 @@ export const SubmitHours = () => {
   const [description, setDescription] = useState('')
   const [formStatusHolder, setFormStatusHolder] = useState('message')
   const [formStatus, setFormStatus] = useState('')
-
-  const { auth } = useContext(AuthContext)
+  // const { auth } = useContext(AuthContext)
+  const userID = localStorage.getItem('user')
 
   const incompleteForm = !date || !hours || !description || !jobLocation
-
-  const submitHours = (e) => {
-    axios.post('http://localhost:3002/dashboard', {
-      //create variable to send to server
-      UserID: auth.id,
-      Date: date,
-      Hours: hours,
-      JobLocation: jobLocation,
-      Description: description,
-      // ****userID is not sending when page is refreshed
-    }).then((response) => {
-      //if credentials don't match
-      if (response.data.message == 'Hours for this date already exist.') {
-        setFormStatus('Hours for this date already exist.')
-      } else {
-        e.target.reset();
-      }
-    })
-  }
-
 
   useEffect (() => {
     if (formStatus !== '') {
@@ -40,8 +20,26 @@ export const SubmitHours = () => {
     }
   }, [formStatus])
 
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    axios.post('http://localhost:3002/dashboard', {
+      //create variable to send to server
+      UserID: userID,
+      Date: date,
+      Hours: hours,
+      JobLocation: jobLocation,
+      Description: description,
+    }).then((response) => {
+      //if date has already been entered by user
+      if (response.data.message) {
+        setFormStatus('Hours for this date already exist.')
+      } else {e.target.reset()}
+    })
+  }
+
   return (
-    <form className='flex column submitContainer' onSubmit={submitHours}>
+    <form className='flex column submitContainer' onSubmit={submitForm}>
       <div className="dateContainer">
         <label>Date:</label> 
         <input type="date" id="date"
