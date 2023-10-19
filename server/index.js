@@ -68,6 +68,7 @@ app.post('/login', (req, res) => {
 
   //create SQL statement to insert user to db table Users
   const SQL = 'SELECT * FROM users WHERE email = ?'
+
   db.query(SQL, sentLoginEmail, (err, results) => {
     if (err) {
       res.send({error: err})
@@ -94,10 +95,10 @@ app.post('/dashboard', (req, res) => {
 
   const SQL = 'INSERT INTO workSegment (jobLocation, hoursWorked, dateWorked, descriptionNotes, userID) VALUES (?,?,?,?,?)'
   const Values = [sentJobLocation, sentHours, sentDate, sentDescription, sentUserID]
-  const sqlCheckDate = `SELECT * FROM workSegment WHERE userID = ? && dateWorked = ?`;
+  const sqlCheckDate = `SELECT * FROM workSegment WHERE userID = ? AND dateWorked = ?`;
   const DateValues = [sentUserID, sentDate]
   db.query(sqlCheckDate, DateValues, (error, results) => {
-    if (results > 0) {
+    if (results.length > 0) {
       res.send({message: `Hours for this date already exist.`})
     } else {
       db.query(SQL, Values, (err, results) => {

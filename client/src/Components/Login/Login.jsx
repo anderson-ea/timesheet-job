@@ -23,6 +23,15 @@ const Login = () => {
   const [loginStatus, setLoginStatus] = useState('')
   const [statusHolder, setStatusHolder] = useState('message')
 
+  useEffect(() => {
+    if (loginStatus !== '') {
+      setStatusHolder('showMessage') //show login message
+      setTimeout(() => {
+        setStatusHolder('message') //hide it after 4s
+      }, 4000)
+    }
+  }, [loginStatus])
+  
   //function to send what registration info the user has submitted
   const loginUser = (e) => {
     //prevent submitting
@@ -38,20 +47,12 @@ const Login = () => {
         navigateTo('/') //navigate back to same login page
         setLoginStatus(`Incorrect email or password`)
       } else {
+        localStorage.setItem('user', response.data[0].id)
         setAuth(response.data[0])
         navigateTo('/dashboard') //navigate to dashboard
       }
     })
   }
-
-  useEffect(() => {
-    if (loginStatus !== '') {
-      setStatusHolder('showMessage') //show login message
-      setTimeout(() => {
-        setStatusHolder('message') //hide it after 4s
-      }, 4000)
-    }
-  }, [loginStatus])
 
   return (
     <div className="loginPage flex">
