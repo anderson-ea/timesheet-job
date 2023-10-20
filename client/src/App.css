@@ -242,7 +242,7 @@ li {
   width: 138px;
 }
 
-.submitContainer input, .submitContainer select {
+.viewContainer input, .submitContainer input, .submitContainer select {
   border-radius: 5px;
   border: none;
   background-color: var(--whiteColor);
