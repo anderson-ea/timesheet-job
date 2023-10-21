@@ -113,5 +113,15 @@ app.post('/dashboard', (req, res) => {
 })
 
 app.get('/checkDates', (req, res) => {
-  
+  const date1 = req.body.FromDate
+  const date2 = req.body.ToDate
+  const sentID = req.body.UserID
+
+  const grabDates = `SELECT * FROM workSegment WHERE userID = ? AND dateWorked BETWEEN ? AND ?`
+  const grabValues = [sentID, date1, date2]
+  db.query(grabDates, grabValues, (err, results) => {
+    if (results.length > 0) {
+      res.send(results)
+    } else {res.send({message: 'No results found'})}
+  })
 })
