@@ -26,7 +26,7 @@ const ViewHours = () => {
       if (response.data.message) {
         console.log('no results')
         setDateStatus('No results found')
-      }
+      } else {console.log(response)}
     })
     // return(
     //   <div className="date-row">

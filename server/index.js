@@ -2,13 +2,13 @@ const express = require('express')
 const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
-
 const bcrypt = require('bcrypt')
-// require('dotenv').config()
-// const USER = process.env.USER
-// const HOST = process.env.HOST
-// const PASS = process.env.PASSWORD
-// const DB = process.env.DB
+
+require('dotenv').config()
+const USER = process.env.USER
+const HOST = process.env.HOST
+const PASS = process.env.PASS
+const DB = process.env.DB
 
 app.use(express.json())
 app.use(cors())
@@ -19,10 +19,10 @@ app.listen(3002, () => {
 
 //create database connection
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "LoLmachines1!",
-  database: "timesheetdb",
+  user: USER,
+  host: HOST,
+  password: PASS,
+  database: DB,
   multipleStatements: true
 })
 
@@ -121,6 +121,7 @@ app.get('/checkDates', (req, res) => {
   const grabValues = [sentID, date1, date2]
   db.query(grabDates, grabValues, (err, results) => {
     if (results.length > 0) {
+      console.log(results)
       res.send(results)
     } else {res.send({message: 'No results found'})}
   })
