@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import AuthContext from '../../../context/AuthProvider'
 
 export const SubmitHours = () => {
   const [date, setDate] = useState('')
@@ -9,7 +8,6 @@ export const SubmitHours = () => {
   const [description, setDescription] = useState('')
   const [formStatusHolder, setFormStatusHolder] = useState('message')
   const [formStatus, setFormStatus] = useState('')
-  // const { auth } = useContext(AuthContext)
   const userID = localStorage.getItem('user')
 
   const incompleteForm = !date || !hours || !description || !jobLocation
@@ -22,7 +20,6 @@ export const SubmitHours = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-
     axios.post('http://localhost:3002/dashboard', {
       //create variable to send to server
       UserID: userID,
@@ -34,12 +31,14 @@ export const SubmitHours = () => {
       //if date has already been entered by user
       if (response.data.message) {
         setFormStatus('Hours for this date already exist.')
-      } else {e.target.reset()}
+      } else {
+        console.log('data logged')
+      }
     })
   }
 
   return (
-    <form className='flex column submitContainer' onSubmit={submitForm}>
+    <form className='flex column submitContainer' id='form' onSubmit={e => submitForm(e.target.value)}>
       <div className="dateContainer">
         <label>Date:</label> 
         <input type="date" id="date"
@@ -80,6 +79,7 @@ export const SubmitHours = () => {
         </textarea>
       </div>
       <button 
+        form='form'
         type='submit'
         disabled={incompleteForm}
         className={!incompleteForm ? 'btn' : 'btnIncomplete'} 

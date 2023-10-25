@@ -5,7 +5,6 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 
 require('dotenv').config()
-const USER = process.env.USER
 const HOST = process.env.HOST
 const PASS = process.env.PASS
 const DB = process.env.DB
@@ -19,7 +18,7 @@ app.listen(3002, () => {
 
 //create database connection
 const db = mysql.createConnection({
-  user: USER,
+  user: "root",
   host: HOST,
   password: PASS,
   database: DB,
